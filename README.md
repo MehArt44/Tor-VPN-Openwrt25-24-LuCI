@@ -31,13 +31,13 @@ A LuCI panel that routes your whole LAN through Tor on OpenWrt, with a kill swit
 روی روتر با SSH و دسترسی root اجرا کنید:
 
 ```sh
-wget -O /tmp/install.sh https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh && sh /tmp/install.sh
+wget -O /tmp/Tor.Vpn.v0.4.9.15_install.sh https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/Tor.Vpn.v0.4.9.15_install.sh && sh /tmp/Tor.Vpn.v0.4.9.15_install.sh
 ```
 
 یا با `curl`:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh -o /tmp/install.sh && sh /tmp/install.sh
+curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/Tor.Vpn.v0.4.9.15_install.sh -o /tmp/Tor.Vpn.v0.4.9.15_install.sh && sh /tmp/Tor.Vpn.v0.4.9.15_install.sh
 ```
 
 پس از پایان نصب، صفحهٔ LuCI را با `Ctrl+F5` تازه کنید و به **VPN → Tor VPN** بروید.
