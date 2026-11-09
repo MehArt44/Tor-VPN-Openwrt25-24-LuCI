@@ -1,113 +1,128 @@
+# Tor VPN Panel for OpenWrt (LuCI)
 
-# Tor VPN Panel for OpenWrt 24.10 & 25.12 (LuCI)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![OpenWrt](https://img.shields.io/badge/OpenWrt-24.10%20%7C%2025.12-00B5E2)
+![Package manager](https://img.shields.io/badge/packages-opkg%20%7C%20apk-lightgrey)
 
-**Version:** 0.4.9.1-stage3c
-**Status:** Stable / Active Development
-**Supported Firmware:** OpenWrt 24.10 (opkg) & OpenWrt 25.12+ (apk)
+**Version:** `0.4.9.1-stage3c` · **Supported firmware:** OpenWrt 24.10 (`opkg`) and OpenWrt 25.12+ (`apk`)
 
-یک پنل مدیریتی قدرتمند و ضد نشتی (Leak-Proof) برای Tor در OpenWrt. این پروژه با استفاده از رابط کاربری LuCI، امکان مدیریت آسان تونل Tor، پل‌های (Bridges) پیشرفته و کیل‌سوئیچ (Kill Switch) را فراهم می‌کند.
+A LuCI panel that routes your whole LAN through Tor on OpenWrt, with a kill switch, DNS leak protection, automatic bridge racing, exit-country selection, live tests and one-click update / uninstall.
 
-A powerful, leak-resistant LuCI panel for managing Tor on OpenWrt 24.10 & 25.12. It features advanced bridge management, a strict Kill Switch, and seamless DNS routing to prevent leaks.
+یک پنل LuCI برای OpenWrt که کل شبکهٔ LAN را از Tor عبور می‌دهد؛ همراه با کیل‌سوئیچ، جلوگیری از نشت DNS، انتخاب خودکار پل (Bridge)، انتخاب کشور خروجی، تست زنده و آپدیت/حذف از داخل پنل.
 
----
-
-## ✨ ویژگی‌های کلیدی (Key Features)
-
-*   **🔒 Kill Switch پیشرفته:** اگر تونل Tor قطع شود، اینترنت دستگاه‌های متصل (LAN) به طور کامل مسدود می‌شود تا از نشتی جلوگیری شود. (قابل غیرفعال‌سازی)
-*   **🌉 مدیریت خودکار پل‌ها (Bridge Auto-Race):** به طور خودکار چندین نوع پل (obfs4, snowflake, webtunnel, meek) را تست کرده و سریع‌ترین و پایدارترین را انتخاب می‌کند.
-*   **🚫 ضد نشتی DNS (DNS Leak Protection):** تمام درخواست‌های DNS شبکه به اجبار از داخل تونل Tor (پورت 9053) عبور می‌کنند.
-*   **🌍 انتخاب خروجی (Exit Node):** امکان انتخاب کشور خروجی (مثلاً فقط آمریکا یا آلمان) با استفاده از منوی کشویی و پرچم کشورها.
-*   **📊 داشبورد و تست زنده:** تست سلامت تونل، سرعت دانلود/آپلود، لاگ‌های زنده و بررسی نشتی IPv6.
-*   **🧠 حالت حافظه (Memory Mode):** ذخیره پل‌های موفق (Proven Bridges) برای اتصال سریع‌تر در دفعات بعدی.
-*   **🔄 سازگاری دوگانه:** پشتیبانی از سیستم بسته‌بندی جدید `apk` (نسخه 25.12) و قدیمی `opkg` (نسخه 24.10).
-*   **🗑️ حذف تمیز:** اسکریپت حذف (Uninstall) تمام تنظیمات فایروال، DNS و کیل‌سوئیچ را پاک می‌کند.
+![Panel screenshot](https://github.com/user-attachments/assets/fb0dd2e1-791f-431e-a146-7ad69111e0c3)
 
 ---
 
-## 🚀 نصب سریع (Quick Installation)
+## ✨ ویژگی‌ها (Features)
 
-برای نصب، فقط کافی است دستور زیر را در ترمینال SSH روتر خود (با دسترسی root) کپی و اجرا کنید:
+- **🔒 Kill Switch:** وقتی Auto Connect روشن است، اینترنت LAN فقط از مسیر Tor عبور می‌کند؛ اگر Tor قطع یا متوقف شود، LAN بدون Tor به اینترنت نمی‌رسد (تا Start یا Unblock Internet).
+- **🌉 Bridge Race (مسابقهٔ خودکار پل‌ها):** اتصال مستقیم (vanilla)، `obfs4` و `webtunnel` هم‌زمان امتحان می‌شوند و اولین اتصال موفق انتخاب می‌شود. پل شخصی هم می‌توانید اضافه کنید.
+- **🚫 ضد نشت DNS:** درخواست‌های DNS شبکه به DNSPort تور (`9053`) هدایت می‌شوند.
+- **🌍 انتخاب کشور خروجی:** با منوی کشویی و پرچم؛ همراه با گزینهٔ Strict Exit.
+- **📊 داشبورد و تست زنده:** Bootstrap، SOCKS، DNS، فایروال، نشت IPv6، IP واقعی در برابر IP تور، سرعت و لاگ.
+- **🧠 Memory Mode:** پل‌های موفق ذخیره می‌شوند تا اتصال بعدی سریع‌تر باشد.
+- **🔄 آپدیت از داخل پنل:** نمایش تاریخ نسخهٔ نصب‌شده، بررسی نسخهٔ جدید در گیت‌هاب و آپدیت با یک کلیک (اگر گیت‌هاب بسته باشد از مسیر Tor دانلود می‌کند).
+- **📦 سازگاری دوگانه:** `apk` (25.12+) و `opkg` (24.10). اگر Tor نصب‌شده قدیمی‌تر از `0.4.9.5` باشد، نصاب تلاش می‌کند آن را ارتقا دهد.
+- **🗑️ حذف تمیز:** قوانین فایروال، تغییرات DNS و کیل‌سوئیچ پاک می‌شوند.
 
-```bash
-wget -O /tmp/install.sh https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/install.sh && sh /tmp/install.sh
+---
+
+## 🚀 نصب (Installation)
+
+روی روتر با SSH و دسترسی root اجرا کنید:
+
+```sh
+wget -O /tmp/install.sh https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh && sh /tmp/install.sh
 ```
 
-*یا اگر از `curl` استفاده می‌کنید:*
+یا با `curl`:
 
-```bash
-curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/install.sh -o /tmp/install.sh && sh /tmp/install.sh
+```sh
+curl -fsSL https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh -o /tmp/install.sh && sh /tmp/install.sh
 ```
 
-پس از اتمام نصب، مرورگر خود را باز کرده و به مسیر **VPN -> Tor VPN** در پنل LuCI بروید.
+پس از پایان نصب، صفحهٔ LuCI را با `Ctrl+F5` تازه کنید و به **VPN → Tor VPN** بروید.
+
+**نیازمندی‌ها:** اینترنت روی روتر هنگام نصب، فضای کافی برای بسته‌های `tor`، `tor-geoip`، `curl` و ترنسپورت‌ها (`lyrebird`، `snowflake-client`، `obfs4proxy`). نصاب هر چه لازم باشد خودش نصب می‌کند؛ اگر بسته‌ای برای معماری شما در فید موجود نباشد، هشدار می‌دهد و برای ترنسپورت‌ها از بستهٔ آمادهٔ Tor Project (با بررسی SHA-256) استفاده می‌کند.
+
+> اگر LuCI منو را نشان نداد: `Ctrl+F5` بزنید یا روی روتر
+> `/etc/init.d/rpcd restart && /etc/init.d/uhttpd restart` را اجرا کنید.
 
 ---
 
-## 🛠️ راهنمای بخش‌های مختلف پنل (Panel Guide)
+## 🛠️ راهنمای پنل (Panel Guide)
 
-### 1. Service Control (کنترل سرویس)
-*   **Start / Restart:** تونل Tor را روشن یا ری‌استارت می‌کند.
-*   **Stop:** تونل را خاموش می‌کند. (توجه: اگر کیل‌سوئیچ روشن باشد، اینترنت LAN قطع می‌ماند).
-*   **Unblock Internet:** اگر Tor را متوقف کردید و می‌خواهید اینترنت عادی (بدون Tor) را داشته باشید، این دکمه کیل‌سوئیچ را آزاد می‌کند.
+### ۱. Service Control (کنترل سرویس)
+- **Start / Restart:** تونل Tor را روشن یا دوباره راه‌اندازی می‌کند.
+- **Stop:** Tor را خاموش می‌کند. اگر کیل‌سوئیچ فعال باشد، اینترنت LAN قطع می‌ماند.
+- **Unblock Internet:** پس از Stop، کیل‌سوئیچ را آزاد می‌کند تا LAN اینترنت عادی (بدون Tor) داشته باشد.
 
-### 2. Auto Connect (اتصال خودکار)
-با روشن کردن این گزینه، Tor هنگام بوت شدن روتر به طور خودکار اجرا می‌شود. خاموش کردن آن، کیل‌سوئیچ را نیز غیرفعال می‌کند.
+### ۲. Auto Connect (Enable)
+- روشن: Tor هنگام بوت اجرا می‌شود و کیل‌سوئیچ فعال است.
+- خاموش + Apply: Tor متوقف می‌شود و همهٔ قوانینی که اضافه کرده (فایروال، کیل‌سوئیچ، مسیر DNS، IPv6) برداشته می‌شود.
 
-### 3. Custom Exit Node (انتخاب کشور خروجی)
-اگر می‌خواهید IP شما مربوط به کشور خاصی باشد (مثلاً برای دور زدن تحریم‌ها)، این گزینه را فعال کرده و کشور مورد نظر را انتخاب کنید. برای امنیت بیشتر، گزینه **Strict Exit** را فعال کنید تا Tor هرگز از کشور دیگری خارج نشود.
+### ۳. Custom Exit Node (کشور خروجی)
+با روشن کردن آن، از **Target Region(s)** یک یا چند کشور انتخاب کنید. گزینهٔ **Strict Exit** مانع خروج از کشورهای دیگر می‌شود (Tor به‌جای آن دوباره تلاش می‌کند، پس ممکن است اتصال کندتر یا ناپایدار شود).
 
-### 4. Use Tor Bridges (استفاده از پل‌ها - بسیار مهم برای ایران)
-اگر اتصال مستقیم به Tor برقرار نشد، باید از پل‌ها استفاده کنید:
-*   **Bridge Mode:**
-    *   `Auto`: به طور خودکار بهترین پل را انتخاب می‌کند (پیشنهاد می‌شود).
-    *   `obfs4`: برای دور زدن فیلترینگ شدید.
-    *   `snowflake`: استفاده از مرورگرهای دیگران به عنوان پل.
-    *   `webtunnel`: پل‌های جدید و بسیار مقاوم.
-*   **Bridge Lines:** اگر پل شخصی دارید، می‌توانید آن را در اینجا وارد کنید.
+### ۴. Bridges (پل‌ها)
+حالت اتصال همیشه **Race** است: اتصال مستقیم، `obfs4` و `webtunnel` هم‌زمان امتحان می‌شوند (مهلت پیش‌فرض ۱۲۰ ثانیه).
+- **Bridge Lines:** پل شخصی خود را (هر پل در یک خط) وارد کنید؛ پل‌های واردشده بر مجموعهٔ پیش‌فرض اولویت دارند.
+- نمونه قالب‌ها:
+  - `obfs4 <IP>:<PORT> <FINGERPRINT> cert=<CERT> iat-mode=<0/1/2>`
+  - `webtunnel <IP>:<PORT> <FINGERPRINT> url=https://<DOMAIN>/<PATH> ver=<VERSION>`
 
-### 5. Security Status (وضعیت امنیت)
-در این بخش می‌توانید روی دکمه **Run All Tests** کلیک کنید تا وضعیت نشتی DNS، فایروال، IPv6 و پورت‌های Tor را بررسی کنید. همه چیز باید سبز (OK) باشد.
+### ۵. Router Traffic via Tor
+ترافیک خود روتر (مثل `curl` و نصب بسته) را هم از Tor عبور می‌دهد.
+
+### ۶. Security Status و Router-Side Diagnostics
+دکمهٔ **Run All Tests** وضعیت Tor، TransPort، DNS تور، فایروال، محافظ نشت DNS و IPv6 را بررسی می‌کند. در زمان Bootstrap ممکن است تست‌ها زمان‌بر باشند؛ تا رسیدن به ۱۰۰٪ صبر کنید و دوباره اجرا کنید. بخش Logs لاگ زندهٔ Tor را نشان می‌دهد.
+
+### ۷. Update / Uninstall
+- **Update URL:** آدرس raw فایل `install.sh` (به‌صورت پیش‌فرض همین مخزن).
+- **Check for updates:** تاریخ نسخهٔ نصب‌شده را با نسخهٔ گیت‌هاب مقایسه می‌کند.
+- **Update now:** نصاب را دانلود و اجرا می‌کند. تنظیمات حفظ می‌شود.
+- **Uninstall:** پنل و قوانین را حذف می‌کند. با تیک «Also delete settings, state and Memory record» همه‌چیز پاک می‌شود.
+- **Clear cache:** فقط کش شبکهٔ Tor را پاک می‌کند (کلیدها و تنظیمات می‌مانند). اگر Tor روشن باشد، چند دقیقه ری‌استارت و دانلود دوباره انجام می‌شود.
 
 ---
 
-## 🗑️ حذف برنامه (Uninstallation)
+## 🔄 آپدیت
 
-برای حذف کامل پنل و تنظیمات، دستور زیر را اجرا کنید:
+از داخل پنل: **Update / Uninstall → Check for updates → Update now**، یا با اجرای دوبارهٔ دستور نصب. پس از آپدیت صفحه را با `Ctrl+F5` تازه کنید.
 
-```bash
-wget -O /tmp/install.sh https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh && sh /tmp/install.sh --uninstall
+## 🗑️ حذف
+
+از پنل (Uninstall)، یا از SSH:
+
+```sh
+sh /usr/libexec/tor_ui/installer.sh uninstall            # حذف، با حفظ تنظیمات
+sh /usr/libexec/tor_ui/installer.sh uninstall --purge    # حذف کامل
 ```
 
-اگر می‌خواهید تمام حافظه (Cache) و تنظیمات هم پاک شوند، از دستور زیر استفاده کنید:
-```bash
-sh /tmp/install.sh --uninstall --purge
+اگر نسخهٔ محلی نصاب موجود نیست:
+
+```sh
+wget -O /tmp/install.sh https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh && sh /tmp/install.sh uninstall --purge
 ```
 
 ---
 
-## ⚠️ نکات مهم (Troubleshooting)
+## ⚠️ نکات مهم و عیب‌یابی
 
-*   **تداخل با سایر VPNها:** این پنل با WireGuard یا OpenVPN که روی روتر فعال باشند تداخل دارد. لطفاً قبل از روشن کردن Tor، سایر تونل‌ها را خاموش کنید.
-*   **کندی اولیه:** بار اول ممکن است اتصال به Tor (Bootstrap) چند دقیقه طول بکشد. صبر کنید تا درصد به 100% برسد.
-*   **مشکل در دانلود بسته‌ها (خطای wget):** اگر در حین نصب خطای `wget: exited with error 4` گرفتید، یعنی `wget` روتر شما مشکل دارد. دستور `ln -sf /bin/uclient-fetch /usr/bin/wget` را اجرا کنید و مجدداً اسکریپت را اجرا کنید.
-
----
-
-## 🤝 مشارکت (Contributing)
-از اینکه به این پروژه علاقه نشان می‌دهید سپاسگزاریم. برای گزارش باگ یا ارائه پیشنهاد، می‌توانید از بخش **Issues** در گیت‌هاب استفاده کنید.
-
-## 📜 لایسنس (License)
-این پروژه تحت لایسنس **MIT** منتشر شده است. استفاده و تغییر آن آزاد است.
-```
+- **تداخل با VPNهای دیگر:** اگر OpenVPN یا WireGuard فعال باشد و مسیر پیش‌فرض (default route) را در اختیار داشته باشد، Tor به‌صورت پیش‌فرض **شروع نمی‌شود** (`conflict_policy=block`) و علت در لاگ ثبت می‌شود. ابتدا آن VPN را خاموش کنید. با
+  `uci set tor_ui.main.conflict_policy=downgrade && uci commit tor_ui`
+  به‌جای توقف، مسیریابی شفاف خاموش می‌شود و فقط SOCKS در دسترس می‌ماند.
+- **Bootstrap کند:** بار اول چند دقیقه طول می‌کشد؛ تا ۱۰۰٪ صبر کنید.
+- **خطای `wget: exited with error 4`:** اگر `wget` روتر مشکل داشت، از `curl` استفاده کنید یا
+  `ln -sf /bin/uclient-fetch /usr/bin/wget` را اجرا کنید و نصب را تکرار کنید.
+- **پورت‌ها:** SOCKS `9050` · TransPort `9040` · DNSPort `9053` (در `/etc/config/tor_ui` قابل تغییر).
+- **سلب مسئولیت:** Tor ناشناسی مطلق تضمین نمی‌کند. قوانین کشور خود را رعایت کنید و مسئولیت استفاده با خودتان است.
 
 ---
 
-### 💡 نکات تکمیلی برای انتشار در گیت‌هاب:
+## 🤝 مشارکت و لایسنس
 
-1.  **فایل `README.md`:** متن بالا را در فایل `README.md` در صفحه اصلی مخزن خود قرار دهید.
-2.  **فایل `LICENSE`:** یک فایل به نام `LICENSE` بسازید و لایسنس MIT را در آن قرار دهید.
-3.  **بخش Releases:** در گیت‌هاب، به تب `Releases` بروید و یک نسخه جدید (مثلاً `v0.4.9.1`) بسازید. فایل `install.sh` را به عنوان یک فایل ضمیمه (Asset) در آن Release آپلود کنید. این کار به کاربران اجازه می‌دهد بدون کد زدن، فایل را دانلود کنند.
-4.  **عکس (Screenshots):** حتماً چند عکس از محیط پنل LuCI خود (مثل عکس‌هایی که قبلاً فرستادید) را در یک پوشه به نام `screenshots` قرار دهید و در `README` به آن‌ها لینک دهید. (مردم عاشق دیدن ظاهر برنامه قبل از نصب هستند).
-5.  **Badges:** در بالای `README` می‌توانید از نشان‌های گیت‌هاب (مثل OpenWrt version، License و...) استفاده کنید تا مخزن حرفه‌ای‌تر به نظر برسد.
-
+برای گزارش باگ یا پیشنهاد از **Issues** استفاده کنید. این پروژه تحت لایسنس **MIT** منتشر شده است.
 
 <img width="1802" height="1496" alt="image" src="https://github.com/user-attachments/assets/fb0dd2e1-791f-431e-a146-7ad69111e0c3" />
