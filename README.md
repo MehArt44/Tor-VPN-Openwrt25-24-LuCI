@@ -1,3 +1,6 @@
+**پارسی** | [English](README.en.md) | [Chinese](README.zh.md)
+
+
 <div dir="rtl">
 
 # ‏Tor VPN Panel for OpenWrt (LuCI)
