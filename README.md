@@ -77,7 +77,7 @@ curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/downlo
 ### ‏۱. Service Control (کنترل سرویس)
 - ‏**Start / Restart:** تونل Tor را روشن یا دوباره راه‌اندازی می‌کند.
 - ‏**Stop:** Tor را خاموش می‌کند. اگر کیل‌سوئیچ فعال باشد، اینترنت LAN قطع می‌ماند.
-- ‏**Unblock Internet:** پس از Stop، کیل‌سوئیچ را آزاد می‌کند تا LAN اینترنت عادی (بدون Tor) داشته باشد.
+- ‏**Unblock Internet:** ✅ پس از Stop، کیل‌سوئیچ را آزاد می‌کند تا LAN اینترنت عادی (بدون Tor) داشته باشد.
 
 ### ‏۲. Auto Connect (Enable)
 - ‏روشن: Tor هنگام بوت اجرا می‌شود و کیل‌سوئیچ فعال است.
@@ -104,8 +104,8 @@ webtunnel <IP>:<PORT> <FINGERPRINT> url=https://<DOMAIN>/<PATH> ver=<VERSION>
 
 <div dir="rtl">
 
-### ‏۵. Router Traffic via Tor
-ترافیک خود روتر (مثل `curl` و نصب بسته) را هم از Tor عبور می‌دهد.
+### ‏۵. Router Traffic via Tor ✅
+ترافیک خود روتر (مثل `curl` و نصب بسته) را هم از Tor عبور می‌دهد.  
 
 ### ‏۶. Security Status و Router-Side Diagnostics
 دکمهٔ **Run All Tests** وضعیت Tor، TransPort، DNS تور، فایروال، محافظ نشت DNS و IPv6 را بررسی می‌کند. در زمان Bootstrap ممکن است تست‌ها زمان‌بر باشند؛ تا رسیدن به ۱۰۰٪ صبر کنید و دوباره اجرا کنید. بخش Logs لاگ زندهٔ Tor را نشان می‌دهد.
