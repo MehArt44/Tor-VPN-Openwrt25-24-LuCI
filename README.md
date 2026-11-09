@@ -10,8 +10,6 @@ A LuCI panel that routes your whole LAN through Tor on OpenWrt, with a kill swit
 
 یک پنل LuCI برای OpenWrt که کل شبکهٔ LAN را از Tor عبور می‌دهد؛ همراه با کیل‌سوئیچ، جلوگیری از نشت DNS، انتخاب خودکار پل (Bridge)، انتخاب کشور خروجی، تست زنده و آپدیت/حذف از داخل پنل.
 
-![Panel screenshot](https://github.com/user-attachments/assets/fb0dd2e1-791f-431e-a146-7ad69111e0c3)
-
 ---
 
 ## ✨ ویژگی‌ها (Features)
