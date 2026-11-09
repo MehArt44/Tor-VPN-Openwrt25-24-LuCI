@@ -29,13 +29,13 @@ A powerful, leak-resistant LuCI panel for managing Tor on OpenWrt 24.10 & 25.12.
 برای نصب، فقط کافی است دستور زیر را در ترمینال SSH روتر خود (با دسترسی root) کپی و اجرا کنید:
 
 ```bash
-wget -O /tmp/install.sh https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh && sh /tmp/install.sh
+wget -O /tmp/install.sh https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/install.sh && sh /tmp/install.sh
 ```
 
 *یا اگر از `curl` استفاده می‌کنید:*
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh -o /tmp/install.sh && sh /tmp/install.sh
+curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/install.sh -o /tmp/install.sh && sh /tmp/install.sh
 ```
 
 پس از اتمام نصب، مرورگر خود را باز کرده و به مسیر **VPN -> Tor VPN** در پنل LuCI بروید.
