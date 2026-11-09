@@ -1,6 +1,6 @@
 #!/bin/sh
 VERSION="0.4.9.1-stage3c-deltator-ui-ksauto"
-BUILD_DATE="2026-11-09.1"
+BUILD_DATE="2026-11-09.2"
 UPDATE_URL_DEFAULT="https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh"
 set -e
 do_uninstall() {
