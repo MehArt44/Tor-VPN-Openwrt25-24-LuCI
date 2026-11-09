@@ -1,14 +1,16 @@
+<div dir="rtl">
+
 # Tor VPN Panel for OpenWrt (LuCI)
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![OpenWrt](https://img.shields.io/badge/OpenWrt-24.10%20%7C%2025.12-00B5E2)
 ![Package manager](https://img.shields.io/badge/packages-opkg%20%7C%20apk-lightgrey)
 
-**Version:** `0.4.9.1-stage3c` · **Supported firmware:** OpenWrt 24.10 (`opkg`) and OpenWrt 25.12+ (`apk`)
-
-A LuCI panel that routes your whole LAN through Tor on OpenWrt, with a kill switch, DNS leak protection, automatic bridge racing, exit-country selection, live tests and one-click update / uninstall.
+**نسخه:** `0.4.9.1-stage3c` · **فرم‌ور پشتیبانی‌شده:** OpenWrt 24.10 (`opkg`) و OpenWrt 25.12 به بالا (`apk`)
 
 یک پنل LuCI برای OpenWrt که کل شبکهٔ LAN را از Tor عبور می‌دهد؛ همراه با کیل‌سوئیچ، جلوگیری از نشت DNS، انتخاب خودکار پل (Bridge)، انتخاب کشور خروجی، تست زنده و آپدیت/حذف از داخل پنل.
+
+*A LuCI panel that routes your whole LAN through Tor on OpenWrt, with a kill switch, DNS leak protection, automatic bridge racing, exit-country selection, live tests and one-click update / uninstall.*
 
 ---
 
@@ -20,7 +22,7 @@ A LuCI panel that routes your whole LAN through Tor on OpenWrt, with a kill swit
 - **🌍 انتخاب کشور خروجی:** با منوی کشویی و پرچم؛ همراه با گزینهٔ Strict Exit.
 - **📊 داشبورد و تست زنده:** Bootstrap، SOCKS، DNS، فایروال، نشت IPv6، IP واقعی در برابر IP تور، سرعت و لاگ.
 - **🧠 Memory Mode:** پل‌های موفق ذخیره می‌شوند تا اتصال بعدی سریع‌تر باشد.
-- **🔄 آپدیت از داخل پنل:** نمایش تاریخ نسخهٔ نصب‌شده، بررسی نسخهٔ جدید در گیت‌هاب و آپدیت با یک کلیک (اگر گیت‌هاب بسته باشد از مسیر Tor دانلود می‌کند).
+- **🔄 آپدیت هوشمند از داخل پنل:** آدرس آپدیت ثابت است (همین مخزن گیت‌هاب). پنل «تاریخ Build» نسخهٔ نصب‌شده را با نسخهٔ آنلاین مقایسه می‌کند و فقط اگر نسخهٔ آنلاین جدیدتر باشد دانلود و نصب می‌کند (اگر گیت‌هاب بسته باشد از مسیر Tor دانلود می‌کند).
 - **📦 سازگاری دوگانه:** `apk` (25.12+) و `opkg` (24.10). اگر Tor نصب‌شده قدیمی‌تر از `0.4.9.5` باشد، نصاب تلاش می‌کند آن را ارتقا دهد.
 - **🗑️ حذف تمیز:** قوانین فایروال، تغییرات DNS و کیل‌سوئیچ پاک می‌شوند.
 
@@ -30,17 +32,31 @@ A LuCI panel that routes your whole LAN through Tor on OpenWrt, with a kill swit
 
 روی روتر با SSH و دسترسی root اجرا کنید:
 
+</div>
+
+<div dir="ltr">
+
 ```sh
 wget -O /tmp/Tor.Vpn.v0.4.9.15_install.sh https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/Tor.Vpn.v0.4.9.15_install.sh && sh /tmp/Tor.Vpn.v0.4.9.15_install.sh
-
 ```
+
+</div>
+
+<div dir="rtl">
 
 یا با `curl`:
 
+</div>
+
+<div dir="ltr">
+
 ```sh
 curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/Tor.Vpn.v0.4.9.15_install.sh -o /tmp/Tor.Vpn.v0.4.9.15_install.sh && sh /tmp/Tor.Vpn.v0.4.9.15_install.sh
-
 ```
+
+</div>
+
+<div dir="rtl">
 
 پس از پایان نصب، صفحهٔ LuCI را با `Ctrl+F5` تازه کنید و به **VPN → Tor VPN** بروید.
 
@@ -69,8 +85,19 @@ curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/downlo
 حالت اتصال همیشه **Race** است: اتصال مستقیم، `obfs4` و `webtunnel` هم‌زمان امتحان می‌شوند (مهلت پیش‌فرض ۱۲۰ ثانیه).
 - **Bridge Lines:** پل شخصی خود را (هر پل در یک خط) وارد کنید؛ پل‌های واردشده بر مجموعهٔ پیش‌فرض اولویت دارند.
 - نمونه قالب‌ها:
-  - `obfs4 <IP>:<PORT> <FINGERPRINT> cert=<CERT> iat-mode=<0/1/2>`
-  - `webtunnel <IP>:<PORT> <FINGERPRINT> url=https://<DOMAIN>/<PATH> ver=<VERSION>`
+
+</div>
+
+<div dir="ltr">
+
+```text
+obfs4 <IP>:<PORT> <FINGERPRINT> cert=<CERT> iat-mode=<0/1/2>
+webtunnel <IP>:<PORT> <FINGERPRINT> url=https://<DOMAIN>/<PATH> ver=<VERSION>
+```
+
+</div>
+
+<div dir="rtl">
 
 ### ۵. Router Traffic via Tor
 ترافیک خود روتر (مثل `curl` و نصب بسته) را هم از Tor عبور می‌دهد.
@@ -79,9 +106,9 @@ curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/downlo
 دکمهٔ **Run All Tests** وضعیت Tor، TransPort، DNS تور، فایروال، محافظ نشت DNS و IPv6 را بررسی می‌کند. در زمان Bootstrap ممکن است تست‌ها زمان‌بر باشند؛ تا رسیدن به ۱۰۰٪ صبر کنید و دوباره اجرا کنید. بخش Logs لاگ زندهٔ Tor را نشان می‌دهد.
 
 ### ۷. Update / Uninstall
-- **Update URL:** آدرس raw فایل `install.sh` (به‌صورت پیش‌فرض همین مخزن).
-- **Check for updates:** تاریخ نسخهٔ نصب‌شده را با نسخهٔ گیت‌هاب مقایسه می‌کند.
-- **Update now:** نصاب را دانلود و اجرا می‌کند. تنظیمات حفظ می‌شود.
+- **آدرس آپدیت:** ثابت است و در پنل قابل ویرایش نیست (فایل `install.sh` در همین مخزن گیت‌هاب). لینک‌های صفحهٔ `blob` به‌طور خودکار به لینک raw تبدیل می‌شوند.
+- **Check for updates:** «تاریخ Build» نسخهٔ نصب‌شده را با نسخهٔ آنلاین مقایسه می‌کند و نتیجه را نشان می‌دهد (جدیدتر / به‌روز / قدیمی‌تر). با باز کردن این بخش، بررسی یک‌بار خودکار انجام می‌شود.
+- **Update now:** نصاب را دانلود و اعتبارسنجی می‌کند و **فقط اگر تاریخ Build آنلاین جدیدتر باشد** اجرا می‌کند؛ در غیر این صورت پیام «Already up to date» می‌آید و چیزی تغییر نمی‌کند. اگر نسخهٔ جدیدتری نباشد و بخواهید نسخهٔ فعلی را دوباره نصب کنید، پنل پیش از اجرا تأیید می‌گیرد. تنظیمات حفظ می‌شود.
 - **Uninstall:** پنل و قوانین را حذف می‌کند. با تیک «Also delete settings, state and Memory record» همه‌چیز پاک می‌شود.
 - **Clear cache:** فقط کش شبکهٔ Tor را پاک می‌کند (کلیدها و تنظیمات می‌مانند). اگر Tor روشن باشد، چند دقیقه ری‌استارت و دانلود دوباره انجام می‌شود.
 
@@ -89,22 +116,38 @@ curl -fsSL https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/downlo
 
 ## 🔄 آپدیت
 
-از داخل پنل: **Update / Uninstall → Check for updates → Update now**، یا با اجرای دوبارهٔ دستور نصب. پس از آپدیت صفحه را با `Ctrl+F5` تازه کنید.
+از داخل پنل: **Update / Uninstall ← Check for updates ← Update now**؛ فقط در صورت وجود نسخهٔ جدیدتر (بر اساس تاریخ Build) نصب انجام می‌شود. یا با اجرای دوبارهٔ دستور نصب بالا. پس از آپدیت صفحه را با `Ctrl+F5` تازه کنید.
 
 ## 🗑️ حذف
 
 از پنل (Uninstall)، یا از SSH:
 
+</div>
+
+<div dir="ltr">
+
 ```sh
-sh /usr/libexec/tor_ui/installer.sh uninstall            # حذف، با حفظ تنظیمات
-sh /usr/libexec/tor_ui/installer.sh uninstall --purge    # حذف کامل
+sh /usr/libexec/tor_ui/installer.sh uninstall            # remove, keep settings
+sh /usr/libexec/tor_ui/installer.sh uninstall --purge    # full removal
 ```
 
+</div>
+
+<div dir="rtl">
+
 اگر نسخهٔ محلی نصاب موجود نیست:
+
+</div>
+
+<div dir="ltr">
 
 ```sh
 wget -O /tmp/install.sh https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/main/install.sh && sh /tmp/install.sh uninstall --purge
 ```
+
+</div>
+
+<div dir="rtl">
 
 ---
 
@@ -124,5 +167,7 @@ wget -O /tmp/install.sh https://raw.githubusercontent.com/MehArt44/Tor-VPN-Openw
 ## 🤝 مشارکت و لایسنس
 
 برای گزارش باگ یا پیشنهاد از **Issues** استفاده کنید. این پروژه تحت لایسنس **MIT** منتشر شده است.
+
+</div>
 
 <img width="1802" height="1496" alt="image" src="https://github.com/user-attachments/assets/fb0dd2e1-791f-431e-a146-7ad69111e0c3" />
