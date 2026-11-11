@@ -1,7 +1,7 @@
 #!/bin/sh
 VERSION="0.4.9.1-stage3c-deltator-ui-ksauto"
 BUILD_DATE="2026-11-11.1"
-UPDATE_URL_DEFAULT="https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/blob/main/install.sh"
+UPDATE_URL_DEFAULT="https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/blob/main/TorVpn_UPDATE.sh"
 set -e
 do_uninstall() {
     set +e
@@ -5074,7 +5074,7 @@ LOCAL_INSTALLER=/usr/libexec/tor_ui/installer.sh
 MAINT_SELF=/usr/libexec/tor_ui/maint.sh
 # Fixed update source (not user-editable). A github.com/.../blob/... page link is
 # converted to its raw.githubusercontent.com form before downloading.
-UPDATE_URL="https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/blob/main/install.sh"
+UPDATE_URL="https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/blob/main/TorVpn_UPDATE.sh"
 raw_url() { printf '%s' "$1" | sed 's#^https://github\.com/\([^/]*\)/\([^/]*\)/blob/#https://raw.githubusercontent.com/\1/\2/#'; }
 RAW_URL=$(raw_url "$UPDATE_URL")
 inst_build() { sed -n 's/^BUILD_DATE=//p' /usr/libexec/tor_ui/version 2>/dev/null | head -n1 | tr -cd '0-9.-'; }
