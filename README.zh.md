@@ -32,6 +32,7 @@
 通过 SSH 以 root 权限在路由器上执行：
 
 ```sh
+apk update && apk add ca-bundle wget-ssl
 wget -O /tmp/Tor.Vpn.v0.4.9.15_install.sh https://github.com/MehArt44/Tor-VPN-Openwrt25-24-LuCI/releases/download/0.4.9.15/Tor.Vpn.v0.4.9.15_install.sh && sh /tmp/Tor.Vpn.v0.4.9.15_install.sh
 
 ```
